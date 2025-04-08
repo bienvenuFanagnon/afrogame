@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "996613181308",
+    "project_id": "afrogame-50422",
+    "storage_bucket": "afrogame-50422.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:996613181308:android:df97cbcc5703bcbf779ef9",
+        "android_client_info": {
+          "package_name": "com.afro.event.afroevent"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjxl50Tz7KyLGyCICz1gAmLkYoaQEurl8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

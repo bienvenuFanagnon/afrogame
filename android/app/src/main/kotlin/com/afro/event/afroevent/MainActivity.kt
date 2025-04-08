@@ -1,0 +1,6 @@
+package com.afro.event.afroevent
+
+import io.flutter.embedding.android.FlutterActivity
+
+class MainActivity: FlutterActivity() {
+}

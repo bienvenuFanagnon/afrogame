@@ -1,0 +1,2 @@
+D:/bienvenu/Projets/other Projets/afroEventProjet/afroevent/android/app/.cxx/RelWithDebInfo/3d2t4ywq/x86/CMakeFiles/edit_cache.dir
+D:/bienvenu/Projets/other Projets/afroEventProjet/afroevent/android/app/.cxx/RelWithDebInfo/3d2t4ywq/x86/CMakeFiles/rebuild_cache.dir
