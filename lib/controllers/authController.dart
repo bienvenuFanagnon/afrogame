@@ -143,108 +143,118 @@ class AuthController extends GetxController {
     required String message,
     required String type_notif,
     required String post_id}) async {
+    printVm(
+        'Send notif');
+    try{
+      String oneSignalUrl = '';
+      String applogo = '';
+      String oneSignalAppId = ''; // Replace with your app ID
+      String oneSignalAuthorization = ''; // Replace with your authorization key
+      getAppData().then((app_data) async {
 
-    String oneSignalUrl = '';
-    String applogo = '';
-    String oneSignalAppId = ''; // Replace with your app ID
-    String oneSignalAuthorization = ''; // Replace with your authorization key
-    getAppData().then((app_data) async {
+        printVm(
+            'app  data*** ');
+        printVm(app_data.toJson());
+        oneSignalUrl = app_data.one_signal_app_url;
+        applogo = app_data.app_logo;
+        oneSignalAppId = app_data.one_signal_app_id; // Replace with your app ID
+        oneSignalAuthorization = app_data.one_signal_api_key; // Replace with your authorization key
+        printVm(
+            'one signal url*** ');
+        printVm(oneSignalUrl);
+        printVm(
+            'state current user data  ================================================');
 
-      printVm(
-          'app  data*** ');
-      printVm(app_data.toJson());
-      oneSignalUrl = app_data.one_signal_app_url;
-      applogo = app_data.app_logo;
-      oneSignalAppId = app_data.one_signal_app_id; // Replace with your app ID
-      oneSignalAuthorization = app_data.one_signal_api_key; // Replace with your authorization key
-      printVm(
-          'one signal url*** ');
-      printVm(oneSignalUrl);
-      printVm(
-          'state current user data  ================================================');
+        printVm(OneSignal.User.pushSubscription.id);
+        final body = {
+          'contents': {'en': message},
+          'app_id': oneSignalAppId,
 
-      printVm(OneSignal.User.pushSubscription.id);
-      final body = {
-        'contents': {'en': message},
-        'app_id': oneSignalAppId,
+          "include_player_ids":
+          // "include_subscription_ids":
+          userIds, //tokenIdList Is the List of All the Token Id to to Whom notification must be sent.
 
-        "include_player_ids":
-        // "include_subscription_ids":
-        userIds, //tokenIdList Is the List of All the Token Id to to Whom notification must be sent.
+          // android_accent_color reprsent the color of the heading text in the notifiction
+          "android_accent_color": "FF9976D2",
 
-        // android_accent_color reprsent the color of the heading text in the notifiction
-        "android_accent_color": "FF9976D2",
+          "small_icon":smallImage.length>5?smallImage: applogo,
 
-        "small_icon":smallImage.length>5?smallImage: applogo,
+          "large_icon": smallImage.length>5?smallImage: applogo,
 
-        "large_icon": smallImage.length>5?smallImage: applogo,
+          "headings": {"en": "228SportZ"},
+          //"included_segments": ["Active Users", "Inactive Users"],
+          // "custom_data": {"order_id": 123, "currency": "USD", "amount": 25},
+          "data": {"send_user_id": "${send_user_id}","recever_user_id": "${recever_user_id}", "type_notif": "${type_notif}", "post_id": "${post_id}","post_type": "","chat_id": ""},
+          'name': '228SportZ',
+        };
 
-        "headings": {"en": "228SportZ"},
-        //"included_segments": ["Active Users", "Inactive Users"],
-        // "custom_data": {"order_id": 123, "currency": "USD", "amount": 25},
-        "data": {"send_user_id": "${send_user_id}","recever_user_id": "${recever_user_id}", "type_notif": "${type_notif}", "post_id": "${post_id}","post_type": "","chat_id": ""},
-        'name': '228SportZ',
-      };
+        final response = await http.post(
+          Uri.parse(oneSignalUrl),
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': "Basic $oneSignalAuthorization",
+          },
+          body: jsonEncode(body),
+        );
 
-      final response = await http.post(
-        Uri.parse(oneSignalUrl),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': "Basic $oneSignalAuthorization",
-        },
-        body: jsonEncode(body),
-      );
+        if (response.statusCode == 200) {
+          printVm('Notification sent successfully!');
+          printVm('sending notification: ${response.body}');
+        } else {
+          printVm('Error sending notification: ${response.statusCode}');
+          printVm('Error sending notification: ${response.body}');
+        }
+        // final body = {
+        //   'contents': {'en': message},
+        //   'app_id': oneSignalAppId,
+        //
+        //   "include_player_ids":
+        //   // "include_subscription_ids":
+        //   userIds, //tokenIdList Is the List of All the Token Id to to Whom notification must be sent.
+        //
+        //   // android_accent_color reprsent the color of the heading text in the notifiction
+        //   "android_accent_color": "FF9976D2",
+        //
+        //   "small_icon": applogo,
+        //
+        //   "large_icon": applogo,
+        //
+        //   "headings": {"en": "konami"},
+        //   //"included_segments": ["Active Users", "Inactive Users"],
+        //   "data": {"foo": "bar"},
+        //   'name': 'konami',
+        //   'custom_data': {'order_id': 123, 'Prix': '500 fcfa'},
+        // };
+        //
+        // final response = await http.post(
+        //   Uri.parse(oneSignalUrl),
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //     'Authorization': "Basic $oneSignalAuthorization",
+        //   },
+        //   body: jsonEncode(body),
+        // );
+        //
+        // if (response.statusCode == 200) {
+        //   printVm('Notification sent successfully!');
+        //   printVm('sending notification: ${response.body}');
+        //   return true;
+        // } else {
+        //   printVm('Error sending notification: ${response.statusCode}');
+        //   printVm('Error sending notification: ${response.body}');
+        //   return false;
+        //
+        // }
 
-      if (response.statusCode == 200) {
-        printVm('Notification sent successfully!');
-        printVm('sending notification: ${response.body}');
-      } else {
-        printVm('Error sending notification: ${response.statusCode}');
-        printVm('Error sending notification: ${response.body}');
-      }
-      // final body = {
-      //   'contents': {'en': message},
-      //   'app_id': oneSignalAppId,
-      //
-      //   "include_player_ids":
-      //   // "include_subscription_ids":
-      //   userIds, //tokenIdList Is the List of All the Token Id to to Whom notification must be sent.
-      //
-      //   // android_accent_color reprsent the color of the heading text in the notifiction
-      //   "android_accent_color": "FF9976D2",
-      //
-      //   "small_icon": applogo,
-      //
-      //   "large_icon": applogo,
-      //
-      //   "headings": {"en": "konami"},
-      //   //"included_segments": ["Active Users", "Inactive Users"],
-      //   "data": {"foo": "bar"},
-      //   'name': 'konami',
-      //   'custom_data': {'order_id': 123, 'Prix': '500 fcfa'},
-      // };
-      //
-      // final response = await http.post(
-      //   Uri.parse(oneSignalUrl),
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //     'Authorization': "Basic $oneSignalAuthorization",
-      //   },
-      //   body: jsonEncode(body),
-      // );
-      //
-      // if (response.statusCode == 200) {
-      //   printVm('Notification sent successfully!');
-      //   printVm('sending notification: ${response.body}');
-      //   return true;
-      // } else {
-      //   printVm('Error sending notification: ${response.statusCode}');
-      //   printVm('Error sending notification: ${response.body}');
-      //   return false;
-      //
-      // }
 
-    },);
+
+      },);
+    }catch(e){
+      printVm('Error excep sending notification: ${e}');
+
+    }
+
+
 
 
     //printVm(OneSignal.User.pushSubscription.id);

@@ -13,6 +13,7 @@ class FormButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed as void Function()?,
       style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.green,
         padding: EdgeInsets.symmetric(vertical: screenHeight * .02),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
@@ -20,7 +21,7 @@ class FormButton extends StatelessWidget {
       ),
       child: Text(
         text,
-        style: const TextStyle(fontSize: 16),
+        style: const TextStyle(fontSize: 16,color: Colors.white),
       ),
     );
   }

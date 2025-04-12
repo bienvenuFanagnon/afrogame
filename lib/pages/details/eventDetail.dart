@@ -324,7 +324,16 @@ class _DetailsEventPageState extends State<DetailsEventPage> {
                             widget.event.like=widget.event.like!+1;
                             await authController.updateEvent(widget.event);
                             setState(() {
-
+                               authController.sendNotification(
+                                userIds: [authController.userLogged.oneIgnalUserid!],
+                                smallImage: "${authController.userLogged.urlImage!}",
+                                send_user_id: "${authController.userLogged.id!}",
+                                recever_user_id: "",
+                                message: "📢 @${authController.userLogged.pseudo!} a liké un évenement",
+                                type_notif: NotificationType.COMMENT.name,
+                                post_id: "${widget.event!.id!}",
+                                // post_type: PostDataType.COMMENT.name, chat_id: ''
+                              );
                             });
                           }
 

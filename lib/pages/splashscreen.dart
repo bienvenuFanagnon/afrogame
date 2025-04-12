@@ -21,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen>
   AuthController authController=Get.find();
   late Animation<double> _scaleAnimation;
 
-  int app_version_code=5;
+  int app_version_code=8;
   Future<void> _launchUrl(Uri url) async {
     if (!await launchUrl(url)) {
       throw Exception('Could not launch $url');
@@ -30,24 +30,32 @@ class _SplashScreenState extends State<SplashScreen>
   checkUser() async {
 
   await  authController.getAppData().then((appdata) async {
+    printVm("appdata:  ${appdata.toJson()}");
+
+    if (appdata.isWaitingForPlaystore==false){
       if (app_version_code== appdata.app_version) {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         printVm("user token:  ${prefs.getString("token")}");
 
         if(prefs.getString("token")!=null){
 
-            await  authController.getUserById(prefs.getString("token")!).then((users) {
-              if(users.isNotEmpty){
-                authController.userLogged=users.first;
-                // printVm("user logged:  ${authController.userLogged.toJson()}");
-              }
-            },);
+          await  authController.getUserById(prefs.getString("token")!).then((users) {
+            if(users.isNotEmpty){
+              authController.userLogged=users.first;
+              // printVm("user logged:  ${authController.userLogged.toJson()}");
+              goToPage(context, HomePage(),withReplace: true);
+
+            }
+          },);
+
+        }else{
+          goToPage(context, HomePage(),withReplace: true);
 
         }
-        goToPage(context, HomePage(),withReplace: true);
 
 
-      }else{
+      }
+      else{
         showModalBottomSheet(
           context: context,
           builder: (BuildContext context) {
@@ -98,6 +106,27 @@ class _SplashScreenState extends State<SplashScreen>
         );
 
       }
+    }else{
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      printVm("user token:  ${prefs.getString("token")}");
+
+      if(prefs.getString("token")!=null){
+
+        await  authController.getUserById(prefs.getString("token")!).then((users) {
+          if(users.isNotEmpty){
+            authController.userLogged=users.first;
+            // printVm("user logged:  ${authController.userLogged.toJson()}");
+            goToPage(context, HomePage(),withReplace: true);
+
+          }
+        },);
+
+      }else{
+        goToPage(context, HomePage(),withReplace: true);
+
+      }
+    }
+
 
     },);
 
@@ -151,7 +180,7 @@ checkUser();
               child: child,
             );
           },
-          child: Image.asset('assets/afrogame_logo_rbg.png'), // Remplacez avec votre image
+          child: Image.asset('assets/logo_sport_togo-rbg.png',width: 170,height: 170,), // Remplacez avec votre image
         ),
       ),
 

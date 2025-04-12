@@ -1,10 +1,8 @@
-/*
-  Flutter UI
-  ----------
-  lib/screens/simple_login.dart
-*/
+
 
 import 'dart:io';
+import 'package:afroevent/pages/Widgets/logoWidget.dart';
+import 'package:afroevent/pages/auth/update_pass_word/confirm_user.dart';
 import 'package:afroevent/pages/home.dart';
 import 'package:afroevent/pages/share/navPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -22,241 +20,6 @@ import '../../controllers/authController.dart';
 import '../../models/event_models.dart';
 import '../share/messageView.dart';
 
-// class SimpleLoginScreen extends StatefulWidget {
-//   /// Callback for when this form is submitted successfully. Parameters are (email, password)
-//   final Function(String? email, String? password)? onSubmitted;
-//
-//   const SimpleLoginScreen({this.onSubmitted, Key? key}) : super(key: key);
-//   @override
-//   State<SimpleLoginScreen> createState() => _SimpleLoginScreenState();
-// }
-//
-// class _SimpleLoginScreenState extends State<SimpleLoginScreen> {
-//   late String email, password;
-//   String? emailError, passwordError;
-//   Function(String? email, String? password)? get onSubmitted =>
-//       widget.onSubmitted;
-//   final AuthController authController = Get.find();
-//   final _auth = FirebaseAuth.instance;
-//
-//
-//   @override
-//   void initState() {
-//     super.initState();
-//     email = '';
-//     password = '';
-//
-//     emailError = null;
-//     passwordError = null;
-//   }
-//
-//   void resetErrorText() {
-//     setState(() {
-//       emailError = null;
-//       passwordError = null;
-//     });
-//   }
-// String errorMessage="";
-//   bool validate() {
-//     resetErrorText();
-//
-//     RegExp emailExp = RegExp(
-//         r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$");
-//
-//     bool isValid = true;
-//     if (email.isEmpty || !emailExp.hasMatch(email)) {
-//       setState(() {
-//         emailError = 'Email is invalid';
-//       });
-//       isValid = false;
-//     }
-//
-//     if (password.isEmpty) {
-//       setState(() {
-//         passwordError = 'Please enter a password';
-//       });
-//       isValid = false;
-//     }
-//
-//     return isValid;
-//   }
-//   signIn(String email, String password) async {
-//
-//       SharedPreferences prefs = await SharedPreferences.getInstance();
-//       try {
-//         await _auth
-//             .signInWithEmailAndPassword(email: email, password: password)
-//             .then((uid) async => {
-//           //serviceProvider.getLoginUser( _auth.currentUser!.uid!,context),
-//
-//           await authController.getUserById(uid.user!.uid!).then((users) async {
-//             //  PhoneVerification phoneverification = PhoneVerification(number:'22896198801' );
-//            await prefs.setString("token", uid.user!.uid!);
-//
-//             //   phoneverification.sendotp('Your Otp');
-//             if (users.isNotEmpty) {
-//               authController.userLogged=users.first;
-//               goToPage(context, HomePage());
-//
-//
-//             }else{
-//               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-//                 content: Text('Erreur de Chargement',textAlign: TextAlign.center,style: TextStyle(color: Colors.red),),
-//               ),);
-//             }
-//           },),
-//
-//         });
-//       } on FirebaseAuthException catch (error) {
-//
-//         switch (error.code) {
-//           case "invalid-email":
-//             errorMessage = "Votre numero semble être malformée.";
-//             break;
-//           case "wrong-password":
-//             errorMessage = "Votre mot de passe est erroné.";
-//             break;
-//           case "user-not-found":
-//             errorMessage = "L'utilisateur avec cet numero n'existe pas.";
-//             break;
-//           case "invalid-credential":
-//             errorMessage = "information incorrecte";
-//             break;
-//           case "user-disabled":
-//             errorMessage = "L'utilisateur avec cet numero a été désactivé.";
-//             break;
-//           case "too-many-requests":
-//             errorMessage = "Trop de demandes";
-//             break;
-//           case "operation-not-allowed":
-//             errorMessage =
-//             "La connexion avec le numero et un mot de passe n'est pas activée.";
-//             break;
-//           case "network-request-failed":
-//             errorMessage =
-//             "erreur de connexion.";
-//             break;
-//           default:
-//             errorMessage = "Une erreur indéfinie s'est produite.";
-//         }
-//         SnackBar snackBar = SnackBar(
-//           content: Text(errorMessage.toString(),textAlign: TextAlign.center,style: TextStyle(color: Colors.red),),
-//         );
-//         ScaffoldMessenger.of(context).showSnackBar(snackBar);
-//         printVm(error.code);
-//
-//     }
-//   }
-//
-//   Future<void> submit() async {
-//     if (validate()) {
-//      await signIn(email,password);
-//     }
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     double screenHeight = MediaQuery.of(context).size.height;
-//
-//     return Scaffold(
-//       appBar: AppBar(),
-//       body: Padding(
-//         padding: const EdgeInsets.symmetric(horizontal: 16),
-//         child: ListView(
-//           children: [
-//             SizedBox(height: screenHeight * .12),
-//             const Text(
-//               'Welcome,',
-//               style: TextStyle(
-//                 fontSize: 28,
-//                 fontWeight: FontWeight.bold,
-//               ),
-//             ),
-//             SizedBox(height: screenHeight * .01),
-//             Text(
-//               'Sign in to continue!',
-//               style: TextStyle(
-//                 fontSize: 18,
-//                 color: Colors.black.withOpacity(.6),
-//               ),
-//             ),
-//             SizedBox(height: screenHeight * .12),
-//             InputField(
-//               onChanged: (value) {
-//                 setState(() {
-//                   email = value;
-//                 });
-//               },
-//               labelText: 'Email',
-//               errorText: emailError,
-//               keyboardType: TextInputType.emailAddress,
-//               textInputAction: TextInputAction.next,
-//               autoFocus: true,
-//             ),
-//             SizedBox(height: screenHeight * .025),
-//             InputField(
-//               onChanged: (value) {
-//                 setState(() {
-//                   password = value;
-//                 });
-//               },
-//               onSubmitted: (val) => submit(),
-//               labelText: 'Password',
-//               errorText: passwordError,
-//               obscureText: true,
-//               textInputAction: TextInputAction.next,
-//             ),
-//             Align(
-//               alignment: Alignment.centerRight,
-//               child: TextButton(
-//                 onPressed: () {},
-//                 child: const Text(
-//                   'Forgot Password?',
-//                   style: TextStyle(
-//                     color: Colors.black,
-//                   ),
-//                 ),
-//               ),
-//             ),
-//             SizedBox(
-//               height: screenHeight * .075,
-//             ),
-//             FormButton(
-//               text: 'Log In',
-//               onPressed: submit,
-//             ),
-//             SizedBox(
-//               height: screenHeight * .15,
-//             ),
-//             TextButton(
-//               onPressed: () => Navigator.push(
-//                 context,
-//                 MaterialPageRoute(
-//                   builder: (_) => const SimpleRegisterScreen(),
-//                 ),
-//               ),
-//               child: RichText(
-//                 text: const TextSpan(
-//                   text: "I'm a new user, ",
-//                   style: TextStyle(color: Colors.black),
-//                   children: [
-//                     TextSpan(
-//                       text: 'Sign Up',
-//                       style: TextStyle(
-//                         color: Colors.blue,
-//                         fontWeight: FontWeight.bold,
-//                       ),
-//                     ),
-//                   ],
-//                 ),
-//               ),
-//             )
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
 
 class SimpleLoginScreen extends StatefulWidget {
   /// Callback lorsque ce formulaire est soumis avec succès. Les paramètres sont (email, mot de passe)
@@ -406,17 +169,23 @@ class _SimpleLoginScreenState extends State<SimpleLoginScreen> {
     double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: Colors.green,
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: ListView(
           children: [
-            SizedBox(height: screenHeight * .12),
+            SizedBox(height: screenHeight * .02),
+            LogoWidget(),
+            SizedBox(height: screenHeight * .01),
+
             const Text(
-              'Bienvenue,',
+              'Bienvenue sur 228SportZ,',
               style: TextStyle(
-                fontSize: 28,
+                fontSize: 25,
                 fontWeight: FontWeight.bold,
+                color: Colors.green
               ),
             ),
             SizedBox(height: screenHeight * .01),
@@ -427,7 +196,7 @@ class _SimpleLoginScreenState extends State<SimpleLoginScreen> {
                 color: Colors.black.withOpacity(.6),
               ),
             ),
-            SizedBox(height: screenHeight * .12),
+            SizedBox(height: screenHeight * .05),
             InputField(
               onChanged: (value) {
                 setState(() {
@@ -456,7 +225,10 @@ class _SimpleLoginScreenState extends State<SimpleLoginScreen> {
             Align(
               alignment: Alignment.centerRight,
               child: TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => ConfirmUser(),));
+
+                },
                 child: const Text(
                   'Mot de passe oublié ?',
                   style: TextStyle(
@@ -466,14 +238,14 @@ class _SimpleLoginScreenState extends State<SimpleLoginScreen> {
               ),
             ),
             SizedBox(
-              height: screenHeight * .075,
+              height: screenHeight * .05,
             ),
            tap?SizedBox( height: 20,width: 20, child: CircularProgressIndicator()): FormButton(
               text: 'Se connecter',
               onPressed: submit,
             ),
             SizedBox(
-              height: screenHeight * .15,
+              height: screenHeight * .05,
             ),
             TextButton(
               onPressed: () => Navigator.push(

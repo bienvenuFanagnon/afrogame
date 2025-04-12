@@ -85,6 +85,7 @@ class UserData {
 class AppDefaultData {
   String? id;
   String? app_link;
+  bool? isWaitingForPlaystore=false;
 
   late int app_version = 0;
   late String app_logo = "";

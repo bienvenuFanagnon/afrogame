@@ -114,7 +114,15 @@ class _AidePageState extends State<ContactPage> {
                 'Informations de contact',
                 style: TextStyle(fontSize: 18.0),
               ),
-              SizedBox(height: 150),
+
+              SizedBox(height: 100),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: const Text(
+                  'Afrolook',
+                  style: TextStyle(fontSize: 18.0),
+                ),
+              ),
               TextButton(
 
                 onPressed: () {
@@ -144,8 +152,15 @@ class _AidePageState extends State<ContactPage> {
                 ),
               ),
 
-              const SizedBox(height: 8.0),
-              SizedBox(height: 10),
+              const SizedBox(height: 15),
+
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: const Text(
+                  '228SportZ',
+                  style: TextStyle(fontSize: 18.0),
+                ),
+              ),
               TextButton(
 
                 onPressed: () {
@@ -164,7 +179,7 @@ class _AidePageState extends State<ContactPage> {
                           const Icon(Icons.email,color: Colors.black,),
 
                           Text(
-                            'Contact pour des infos investisseur',
+                            'Contact pour des infos',
                             style: TextStyle(fontSize: 16.0,color: Colors.black),
                           ),
 
@@ -175,122 +190,41 @@ class _AidePageState extends State<ContactPage> {
                 ),
               ),
 
-
-
-              SizedBox(height: 10),
-              TextButton(
-
-                onPressed: () {
-                  sendEmail('officiel.afrolook.annonce@gmail.com');
-                },
-                child: ClipRRect(
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                  child: Container(
-
-                    color: Colors.black12,
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 8,bottom: 8),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          const Icon(Icons.email,color: Colors.black,),
-
-                          Text(
-                            'Contact Afrolook Ads',
-                            style: TextStyle(fontSize: 16.0,color: Colors.green,fontWeight: FontWeight.w900),
-                          ),
-
-
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+              //
+              //
+              // SizedBox(height: 10),
+              // TextButton(
+              //
+              //   onPressed: () {
+              //     sendEmail('officiel.afrolook.annonce@gmail.com');
+              //   },
+              //   child: ClipRRect(
+              //     borderRadius: BorderRadius.all(Radius.circular(20)),
+              //     child: Container(
+              //
+              //       color: Colors.black12,
+              //       child: Padding(
+              //         padding: const EdgeInsets.only(top: 8,bottom: 8),
+              //         child: Row(
+              //           mainAxisAlignment: MainAxisAlignment.spaceAround,
+              //           children: [
+              //             const Icon(Icons.email,color: Colors.black,),
+              //
+              //             Text(
+              //               'Contact Afrolook Ads',
+              //               style: TextStyle(fontSize: 16.0,color: Colors.green,fontWeight: FontWeight.w900),
+              //             ),
+              //
+              //
+              //           ],
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
 
               const SizedBox(height: 8.0),
-              /*
-              Container(
-                child: Card(
-                  color: Colors.white,
-                  elevation: 1,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 8.0,top: 2,bottom: 2),
-                    child: Form(
-                        key: _formKey,
 
-                        child: TextFormField(
-                        controller: _bodyController,
-                        decoration: InputDecoration(
-                            hintStyle: TextStyle(
-                              fontSize: 15,
-                              fontFamily: 'Inter',
-                              //fontWeight: FontWeight.w700,
-                              color: Colors.black54,
-                            ),
-                            hintText: 'Message',
-                            border: InputBorder.none
-                        ),
-                        minLines: 8,
-                        maxLines: 12,
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Le message est obligatoire.';
-                          }
-                          return null;
-                        },
-                        onSaved: (value) {
-                          _message = value!;
-                        },
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 15,
-              ),
-
-              TextButton(
-
-                onPressed:tap?(){}: () async {
-                  if (_formKey.currentState!.validate()) {
-                    // _formKey.currentState!.save();
-                    setState(() {
-                      tap=true;
-                    });
-                    try{
-                      await sendEmail();
-
-                    }catch(e){
-                      print("catch erreur : ${e}");
-                      setState(() {
-                        tap=false;
-                      });
-                    }
-
-
-                    setState(() {
-                      tap=false;
-                    });
-                  }
-                },
-                child: Container(
-
-                    alignment: Alignment.center,
-
-                    height: 56,
-                    width: 180,
-                    decoration: BoxDecoration(
-                        color: CustomConstants.kPrimaryColor,
-                        borderRadius: BorderRadius.all(Radius.circular(10))
-                    ),
-
-
-                    child:tap?CircularProgressIndicator(color: Colors.white,):Text('Envoyer',style: TextStyle(color: Colors.white),)),
-              ),
-
-               */
 
             ],
           ),

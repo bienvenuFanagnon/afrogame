@@ -136,7 +136,10 @@ class CustomDrawer extends StatelessWidget {
               title: 'Déconnexion',
               color: Colors.redAccent,
               onTap: () {
+                if(authController.userLogged.urlImage!=null){
+                  goToPage(context, ProfilePage(userId: authController.userLogged.id!));
 
+                }
               },
             ),
         ],
@@ -221,11 +224,33 @@ class CustomDrawer extends StatelessWidget {
     Get.to(() => ContactPage());
   }
 
-  void _shareApp(BuildContext context) {
-    final appLink = 'https://228sportz.tg';
-    Share.share(
-      'Rejoins la communauté sportive togolaise sur 228sportZ ! 🏆\n$appLink',
-      subject: 'Découvre 228sportZ',
+  Future<void> _shareApp(BuildContext context) async {
+    final box = context.findRenderObject() as RenderBox?;
+
+    await authController.getAppData().then(
+          (value) async {
+        await Share.shareUri(
+          Uri.parse(
+              '${value.app_link}'),
+          sharePositionOrigin:
+          box!.localToGlobal(Offset.zero) & box.size,
+
+        );
+
+        //   if (result.status == ShareResultStatus.success) {
+        //     printVm('Thank you for sharing my website!');
+        //   }
+        //   await FlutterShare.share(
+        //       title: 'Partager Afrolook',
+        //       linkUrl: '${authProvider.appDefaultData.app_link}',
+        //       chooserTitle: 'Partager Afrolook'
+        //   );
+      },
     );
+    // final appLink = 'https://228sportz.tg';
+    // Share.share(
+    //   'Rejoins la communauté sportive togolaise sur 228sportZ ! 🏆\n$appLink',
+    //   subject: 'Découvre 228sportZ',
+    // );
   }
 }

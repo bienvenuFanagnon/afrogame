@@ -51,6 +51,7 @@ AppDefaultData _$AppDefaultDataFromJson(Map<String, dynamic> json) =>
     AppDefaultData()
       ..id = json['id'] as String?
       ..app_link = json['app_link'] as String?
+      ..isWaitingForPlaystore = json['isWaitingForPlaystore'] as bool?
       ..app_version = (json['app_version'] as num).toInt()
       ..app_logo = json['app_logo'] as String
       ..one_signal_api_key = json['one_signal_api_key'] as String
@@ -61,6 +62,7 @@ Map<String, dynamic> _$AppDefaultDataToJson(AppDefaultData instance) =>
     <String, dynamic>{
       'id': instance.id,
       'app_link': instance.app_link,
+      'isWaitingForPlaystore': instance.isWaitingForPlaystore,
       'app_version': instance.app_version,
       'app_logo': instance.app_logo,
       'one_signal_api_key': instance.one_signal_api_key,

@@ -243,6 +243,7 @@ Widget buildVideoPreview(EventData event, double height) {
 final Color primaryColor = Color(0xFF2E7D32);
 final Color accentColor = Color(0xFF81C784);
 Widget buildEventOverlay(EventData event) {
+  print("event: pub : ${event.typeJeu}");
   return Positioned(
     bottom: 0,
     left: 0,
@@ -266,6 +267,19 @@ Widget buildEventOverlay(EventData event) {
                   fontSize: 15,
                   fontWeight: FontWeight.bold)),
           SizedBox(height: 8),
+          event.typeJeu=='PUB'? Row(
+            children: [
+              Icon(Icons.public, color: accentColor, size: 16),
+              SizedBox(width: 8),
+              Text('Pub Sponsorisé',
+                  style: TextStyle(color: Colors.white,fontWeight: FontWeight.w900)),
+              Spacer(),
+              Icon(Icons.visibility, color: accentColor, size: 16),
+              SizedBox(width: 4),
+              Text('${event.vue}',
+                  style: TextStyle(color: Colors.white)),
+            ],
+          ):
           Row(
             children: [
               Icon(Icons.calendar_today, color: accentColor, size: 16),

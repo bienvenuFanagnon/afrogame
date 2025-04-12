@@ -297,6 +297,10 @@ class _NewEventPageState extends State<NewEventPage> {
     }
 
     EventData eventData = EventData()
+    ..id=firestore
+        .collection('EventData')
+        .doc()
+        .id
     ..userId = authController.userLogged.id
     ..titre = _titleController.text
     ..description = _descriptionController.text
@@ -314,15 +318,18 @@ class _NewEventPageState extends State<NewEventPage> {
     ..medias = medias;
 
     await postDetailsToFirestore(eventData);
-    String eventBasket="➡️🏀 Nouveau match de basketball à ${eventData.ville} ! Rejoins-nous et montre tes skills ! 🔥✨";
-    String eventFootball= "➡️⚽ Prépare tes crampons ! Match de football à ${eventData.ville} Viens et marque l'histoire ! 🥅⚡";
-    String eventOnlineGeneral = "➡️🎉 Un nouveau événement en ligne t'attend ! 📅 Rejoins-nous pour une expérience incroyable ! 🚀✨";
+    // String eventBasket="➡️🏀 Nouveau match de basketball à ${eventData.ville} ! Rejoins-nous et montre tes skills ! 🔥✨";
+    // String eventFootball= "➡️⚽ Prépare tes crampons ! Match de football à ${eventData.ville} Viens et marque l'histoire ! 🥅⚡";
+    // String eventOnlineGeneral = "➡️🎉 Un nouveau événement en ligne t'attend ! 📅 Rejoins-nous pour une expérience incroyable ! 🚀✨";
 
     await authController.getUsers().then((users) async {
       if(users.isNotEmpty){
         List<String> listUserId=[];
         for(var user in users){
-          listUserId.add(user.oneIgnalUserid!);
+          if(user.oneIgnalUserid!=null && user.oneIgnalUserid!.isNotEmpty){
+            listUserId.add(user.oneIgnalUserid!);
+
+          }
 
         }
         await authController.sendNotification(
@@ -331,7 +338,8 @@ class _NewEventPageState extends State<NewEventPage> {
             send_user_id: authController.userLogged.id!,
             recever_user_id: "",
             // eventData.categorie=="EVENEMENT"?eventOnlineGeneral:
-            message: eventData.sousCategorie=="Basket"?eventBasket:eventData.sousCategorie=="Football"?eventFootball:eventOnlineGeneral,
+            // message: eventData.sousCategorie=="Basket"?eventBasket:eventData.sousCategorie=="Football"?eventFootball:eventOnlineGeneral,
+            message: "➡️🔥 Nouveau drop sportif sur 228SportZ aujourd’hui ! Viens checker ça !",
             type_notif: "Annonce",
             post_id: eventData.id!);
       }
@@ -360,10 +368,10 @@ class _NewEventPageState extends State<NewEventPage> {
 
   Future<void> postDetailsToFirestore(EventData eventData) async {
     try {
-      String id = firestore.collection('EventData').doc().id;
-      eventData.id = id;
+      // String id = firestore.collection('EventData').doc().id;
+      // eventData.id = id;
 
-      await firestore.collection('EventData').doc(id).set(eventData.toJson());
+      await firestore.collection('EventData').doc(eventData.id).set(eventData.toJson());
 
     } on FirebaseException catch (error) {
       ScaffoldMessenger.of(context).showSnackBar(

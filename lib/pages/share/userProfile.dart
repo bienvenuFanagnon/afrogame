@@ -22,7 +22,7 @@ class UserProfileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(2.0),
       child: GestureDetector(
         onTap: () {
           goToPage(context, ProfilePage(userId: user.id!));
@@ -30,22 +30,30 @@ class UserProfileWidget extends StatelessWidget {
         child: Row(
           children: [
             // Avatar circulaire
-            user.urlImage!=null? CircleAvatar(
-              radius: avatarSize,
-              backgroundImage: NetworkImage(
-                user.urlImage!=null ? user.urlImage! : "https://via.placeholder.com/150",
+            user.urlImage!=null? Container(
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(200))),
+              child: Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: CircleAvatar(
+                  radius: avatarSize-10,
+                  backgroundImage: NetworkImage(
+                    user.urlImage!=null ? user.urlImage! : "https://via.placeholder.com/150",
+                  ),
+                ),
               ),
             ):Icon((Icons.person)),
             const SizedBox(width: 5),
             // Informations utilisateur
-            Text(
-              '@${user.pseudo!=null ? user.pseudo! : ""}',
-              style: TextStyle(
-                fontSize: textSize,
-                fontWeight: FontWeight.bold,
-                color: Colors.white
-              ),
-            ),
+            // Text(
+            //   '@${user.pseudo!=null ? user.pseudo! : ""}',
+            //   style: TextStyle(
+            //     fontSize: textSize,
+            //     fontWeight: FontWeight.bold,
+            //     color: Colors.white
+            //   ),
+            // ),
           ],
         ),
       ),
