@@ -80,8 +80,8 @@ class UserData {
 
   Map<String, dynamic> toJson() => _$UserDataToJson(this);
 }
-@JsonSerializable()
 
+@JsonSerializable()
 class AppDefaultData {
   String? id;
   String? app_link;

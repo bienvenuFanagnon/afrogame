@@ -21,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen>
   AuthController authController=Get.find();
   late Animation<double> _scaleAnimation;
 
-  int app_version_code=8;
+  int app_version_code=9;
   Future<void> _launchUrl(Uri url) async {
     if (!await launchUrl(url)) {
       throw Exception('Could not launch $url');

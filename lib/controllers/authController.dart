@@ -54,6 +54,7 @@ class AuthController extends GetxController {
         // Récupérer le premier document
         DocumentSnapshot premierDocument = querySnapshot.docs.first;
         appData=AppDefaultData.fromJson(premierDocument.data() as Map<String, dynamic>);
+        printVm("La appData ${appData.toJson()}");
 
       } else {
         AppDefaultData appData=AppDefaultData();

@@ -17,7 +17,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.9+9
+version: 1.0.8+8
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
@@ -161,9 +161,6 @@ dependencies:
   flutter_email_sender: ^6.0.2
   random_color: ^1.0.5
   json_annotation: ^4.9.0
-  webview_flutter: ^4.13.0
-
-
 
   #  video_thumbnail: ^0.5.3
 
@@ -193,13 +190,13 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^5.0.0
 
-#icons_launcher:
-#  image_path: "assets/logo_sport_togo-rbg.png"
-#  platforms:
-#    android:
-#      enable: true
-#    ios:
-#      enable: true
+icons_launcher:
+  image_path: "assets/logo_sport_togo-rbg.png"
+  platforms:
+    android:
+      enable: true
+    ios:
+      enable: true
 
 #flutter_launcher_icons:
 #  android: "launcher_icon"
@@ -235,29 +232,6 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/
-    - assets/epargneplus_logo.png
-
-
-flutter_icons:
-  android: true
-  ios: true
-  image_path: "assets/epargneplus_logo.png"
-  min_sdk_android: 21
-
-  web:
-    generate: true
-    image_path: "assets/epargneplus_logo.png"
-    background_color: "#ffffff"
-    theme_color: "#055588"
-
-  windows:
-    generate: true
-    image_path: "assets/epargneplus_logo.png"
-    icon_size: 48
-
-  macos:
-    generate: true
-    image_path: "assets/epargneplus_logo.png"
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

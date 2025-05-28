@@ -1,3 +1,4 @@
+import 'package:afroevent/pages/operationChampionnat/CreationMenu.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
@@ -118,6 +119,14 @@ class CustomDrawer extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 20),
       child: Column(
         children: [
+          _buildMenuItem(
+            icon: Icons.contact_support,
+            title: 'Menu',
+            color: Color(0xFF2575FC),
+            onTap: () {
+              goToPage(context, CreationMenu());
+            },
+          ),
           _buildMenuItem(
             icon: Icons.contact_support,
             title: 'Nous contacter',
